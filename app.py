@@ -15,6 +15,14 @@ def users():
     except Exception as e:
         return "ERROR: " + str(e)
 
+@app.route("/user/<name>")
+def get_user(name):
+    try:
+        conn = sqlite3.connect("test.db")
+        return jsonify(conn.execute(f"SELECT * FROM users WHERE username='{name}'").fetchall())
+    except Exception as e:
+        return "ERROR: " + str(e)
+
 @app.route("/new_user", methods=["POST"])
 def new_user():
     if request.method == "POST":
